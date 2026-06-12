@@ -1,0 +1,28 @@
+<div th:fragment="content">
+    <h2 class="fw-bold mb-4">Danh sách khóa học từ CSDL</h2>
+
+    <table class="table table-bordered table-hover align-middle">
+        <thead class="table-primary">
+        <tr>
+            <th>ID</th>
+            <th>Tên khóa học</th>
+            <th>Mô tả</th>
+            <th>Giá</th>
+            <th>Menu</th>
+            <th>Chuyên mục</th>
+            <th>Trạng thái</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="course : ${courses}">
+            <td th:text="${course.courseId}"></td>
+            <td th:text="${course.courseName}"></td>
+            <td th:text="${course.description}"></td>
+            <td th:text="${course.price}"></td>
+            <td th:text="${course.menu != null ? course.menu.menuName : ''}"></td>
+            <td th:text="${course.category != null ? course.category.categoryName : ''}"></td>
+            <td th:text="${course.active}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>

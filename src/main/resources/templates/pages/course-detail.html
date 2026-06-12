@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${course.title} + ' - EnglishPro'">Chi tiết khóa học</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+
+<section class="page-banner">
+    <div class="container">
+        <span class="hero-badge" th:text="${course.category != null ? course.category.name : 'Khóa học'}">IELTS</span>
+        <h1 th:text="${course.title}">Tên khóa học</h1>
+        <p th:text="${course.description}">Mô tả khóa học</p>
+    </div>
+</section>
+
+<section class="page-section">
+    <div class="container">
+        <div class="row g-4">
+
+            <!-- Cột trái: nội dung khóa học -->
+            <div class="col-lg-8">
+                <div class="form-card">
+
+                    <div class="d-flex gap-3 mb-3 flex-wrap">
+                        <span class="course-badge" th:text="${course.badge}">Best Seller</span>
+                        <span class="text-secondary" th:text="'Cấp độ: ' + ${course.level}">Cấp độ: Beginner</span>
+                        <span class="text-secondary" th:text="'Thời lượng: ' + ${course.duration}">Thời lượng: 24 giờ</span>
+                        <span class="text-secondary" th:text="'Đánh giá: ' + ${course.rating} + ' ⭐'">4.9 ⭐</span>
+                    </div>
+
+                    <img th:src="${course.image}" th:alt="${course.title}"
+                         class="img-fluid rounded mb-4" style="width:100%; max-height:320px; object-fit:cover;">
+
+                    <hr>
+
+                    <h5 class="fw-bold">Bạn sẽ học được gì?</h5>
+                    <ul>
+                        <li>Xây dựng nền tảng kiến thức vững chắc</li>
+                        <li>Luyện tập qua bài tập thực tế</li>
+                        <li>Nhận chứng chỉ hoàn thành khóa học</li>
+                        <li>Hỗ trợ từ giảng viên trong suốt khóa học</li>
+                    </ul>
+
+                    <h5 class="fw-bold mt-4">Giảng viên</h5>
+                    <div class="d-flex align-items-center gap-3 mt-2" th:if="${instructor != null}">
+                        <img th:src="${instructor.avatar}" th:alt="${instructor.name}"
+                             style="width:56px; height:56px; border-radius:50%; object-fit:cover;">
+                        <div>
+                            <div class="fw-bold" th:text="${instructor.name}">Ms. Anna Nguyen</div>
+                            <div class="text-secondary small" th:text="${instructor.role}">IELTS Speaking Mentor</div>
+                        </div>
+                    </div>
+
+                    <h5 class="fw-bold mt-4">Nội dung khóa học</h5>
+                    <div class="accordion mt-2" id="courseAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#m1">
+                                    Module 1 - Cài đặt và nền tảng
+                                </button>
+                            </h2>
+                            <div id="m1" class="accordion-collapse collapse show" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">Giới thiệu khóa học, cài đặt môi trường và các kiến thức nền tảng.</div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#m2">
+                                    Module 2 - Nội dung chính
+                                </button>
+                            </h2>
+                            <div id="m2" class="accordion-collapse collapse" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">Các bài học chuyên sâu và bài tập thực hành.</div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#m3">
+                                    Module 3 - Ôn tập và kiểm tra
+                                </button>
+                            </h2>
+                            <div id="m3" class="accordion-collapse collapse" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body">Ôn tập toàn bộ kiến thức và làm bài kiểm tra cuối khóa.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Cột phải: thông tin đăng ký -->
+            <div class="col-lg-4">
+                <div class="form-card sticky-top" style="top: 24px;">
+                    <div class="course-price mb-3">
+                        <strong class="fs-4" th:text="${course.price}">899.000đ</strong>
+                        <del class="text-secondary ms-2" th:text="${course.oldPrice}">1.299.000đ</del>
+                    </div>
+
+                    <p class="text-secondary small">Bao gồm video, tài liệu, bài tập và chứng chỉ hoàn thành.</p>
+
+                    <div class="d-grid gap-2">
+                        <a th:href="@{/enroll}" class="btn btn-red">Đăng ký ngay</a>
+                        <a th:href="@{/checkout}" class="btn btn-dark-soft">Thanh toán</a>
+                    </div>
+
+                    <hr>
+
+                    <ul class="list-unstyled text-secondary small mt-2">
+                        <li>✅ Cấp độ: <span th:text="${course.level}">Beginner</span></li>
+                        <li>✅ Thời lượng: <span th:text="${course.duration}">24 giờ</span></li>
+                        <li>✅ Đánh giá: <span th:text="${course.rating} + ' ⭐'">4.9 ⭐</span></li>
+                        <li>✅ Trạng thái: <span th:text="${course.status}">Đang bán</span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
